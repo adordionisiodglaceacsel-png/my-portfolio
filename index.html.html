@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D'Glace Acsel Ador Dionisio | Virtual Assistant Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #1a1a1a;
+            --gray-100: #f8f8f8;
+            --gray-200: #e8e8e8;
+            --gray-300: #d0d0d0;
+            --gray-400: #a0a0a0;
+            --gray-500: #707070;
+            --gray-600: #505050;
+            --gray-700: #303030;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'Inter', sans-serif; background: var(--secondary); color: var(--primary); overflow-x: hidden; line-height: 1.6; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--gray-100); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s ease; background: transparent; }
+        nav.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); box-shadow: 0 2px 20px rgba(0,0,0,0.05); padding: 0.8rem 5%; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; color: var(--primary); text-decoration: none; position: relative; }
+        .logo::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease; }
+        .logo:hover::after { width: 100%; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--gray-600); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; position: relative; transition: color 0.3s ease; text-transform: uppercase; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 1.5px; background: var(--primary); transition: width 0.3s ease; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 6rem 5% 4rem; background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 50%, #ffffff 100%); }
+        .hero-bg-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.03; background-image: radial-gradient(circle at 20% 50%, #000 1px, transparent 1px), radial-gradient(circle at 80% 50%, #000 1px, transparent 1px); background-size: 60px 60px; animation: floatPattern 20s linear infinite; }
+        @keyframes floatPattern { 0% { transform: translateY(0); } 100% { transform: translateY(-60px); } }
+        .hero-content { max-width: 1200px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 2; }
+        .hero-text { opacity: 0; transform: translateY(40px); animation: fadeInUp 1s ease forwards 0.3s; }
+        .hero-badge { display: inline-block; padding: 0.5rem 1.2rem; border: 1px solid var(--primary); border-radius: 50px; font-size: 0.75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; background: var(--primary); color: var(--secondary); position: relative; overflow: hidden; }
+        .hero-badge::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: shimmer 3s infinite; }
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -1px; }
+        .hero h1 .highlight { position: relative; display: inline-block; }
+        .hero h1 .highlight::after { content: ''; position: absolute; bottom: 5px; left: 0; width: 100%; height: 12px; background: var(--gray-200); z-index: -1; transform: scaleX(0); transform-origin: left; animation: underlineGrow 0.8s ease forwards 1s; }
+        @keyframes underlineGrow { to { transform: scaleX(1); } }
+        .hero-subtitle { font-size: 1.1rem; color: var(--gray-500); margin-bottom: 1.5rem; font-weight: 500; letter-spacing: 0.5px; min-height: 1.5em; }
+        .hero-description { font-size: 1rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 2.5rem; max-width: 500px; }
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn { padding: 1rem 2.5rem; border: 2px solid var(--primary); font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: var(--primary); color: var(--secondary); }
+        .btn-primary:hover { background: transparent; color: var(--primary); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .btn-secondary { background: transparent; color: var(--primary); }
+        .btn-secondary:hover { background: var(--primary); color: var(--secondary); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+        .hero-profile { display: flex; justify-content: center; align-items: center; position: relative; opacity: 0; transform: translateY(40px); animation: fadeInUp 1s ease forwards 0.6s; }
+        .profile-container { position: relative; width: 350px; height: 450px; }
+        .profile-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 380px; height: 480px; border-radius: 20px; background: linear-gradient(45deg, transparent, rgba(0,0,0,0.03), transparent); animation: glowPulse 4s ease-in-out infinite; }
+        @keyframes glowPulse { 0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); } }
+        .profile-frame { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 2px solid var(--primary); border-radius: 20px; transform: rotate(-3deg); transition: transform 0.5s ease; }
+        .profile-container:hover .profile-frame { transform: rotate(0deg); }
+        .profile-image { position: relative; width: 100%; height: 100%; background: var(--gray-100); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid var(--gray-200); }
+        .profile-avatar { width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, var(--gray-700), var(--primary)); display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; position: relative; animation: floatAvatar 6s ease-in-out infinite; overflow: hidden; }
+        @keyframes floatAvatar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-avatar i { font-size: 4rem; color: var(--secondary); }
+        .profile-image h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .profile-image p { color: var(--gray-500); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
+        .profile-social { position: absolute; bottom: 2rem; display: flex; gap: 1rem; }
+        .profile-social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gray-300); display: flex; align-items: center; justify-content: center; color: var(--gray-600); transition: all 0.3s ease; text-decoration: none; }
+        .profile-social a:hover { background: var(--primary); color: var(--secondary); border-color: var(--primary); transform: translateY(-3px); }
+        .floating-elements { position: absolute; width: 100%; height: 100%; pointer-events: none; }
+        .floating-dot { position: absolute; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; opacity: 0.3; animation: floatDot 8s ease-in-out infinite; }
+        .floating-dot:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-dot:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .floating-dot:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 4s; }
+        .floating-dot:nth-child(4) { bottom: 10%; right: 10%; animation-delay: 6s; }
+        @keyframes floatDot { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(10px, -15px); } 50% { transform: translate(-5px, 10px); } 75% { transform: translate(15px, 5px); } }
+
+        section { padding: 6rem 5%; position: relative; }
+        .section-header { text-align: center; margin-bottom: 4rem; opacity: 0; transform: translateY(30px); }
+        .section-header.visible { animation: fadeInUp 0.8s ease forwards; }
+        .section-label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gray-400); margin-bottom: 1rem; position: relative; }
+        .section-label::before, .section-label::after { content: ''; position: absolute; top: 50%; width: 30px; height: 1px; background: var(--gray-300); }
+        .section-label::before { right: calc(100% + 15px); }
+        .section-label::after { left: calc(100% + 15px); }
+        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.2; }
+        .section-subtitle { color: var(--gray-500); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        .about { background: var(--gray-100); }
+        .about-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-image { position: relative; opacity: 0; transform: translateX(-40px); }
+        .about-image.visible { animation: fadeInLeft 0.8s ease forwards; }
+        .about-image-box { width: 100%; height: 500px; background: var(--secondary); border-radius: 20px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid var(--gray-200); }
+        .about-image-box img { width: 100%; height: 100%; object-fit: cover; }
+        .about-image-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent, rgba(0,0,0,0.02), transparent); animation: rotate 10s linear infinite; }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .about-icon { font-size: 8rem; color: var(--gray-200); position: relative; z-index: 1; }
+        .about-content { opacity: 0; transform: translateX(40px); }
+        .about-content.visible { animation: fadeInRight 0.8s ease forwards; }
+        .about-text { font-size: 1.1rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 2rem; }
+        .strengths-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .strength-card { padding: 1.5rem; background: var(--secondary); border-radius: 12px; border: 1px solid var(--gray-200); transition: all 0.4s ease; opacity: 0; transform: translateY(20px); }
+        .strength-card.visible { animation: fadeInUp 0.6s ease forwards; }
+        .strength-card:nth-child(1) { animation-delay: 0.1s; }
+        .strength-card:nth-child(2) { animation-delay: 0.2s; }
+        .strength-card:nth-child(3) { animation-delay: 0.3s; }
+        .strength-card:nth-child(4) { animation-delay: 0.4s; }
+        .strength-card:nth-child(5) { animation-delay: 0.5s; }
+        .strength-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); border-color: var(--primary); }
+        .strength-card i { font-size: 1.5rem; margin-bottom: 0.8rem; color: var(--primary); }
+        .strength-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .strength-card p { font-size: 0.85rem; color: var(--gray-500); }
+
+        .career-objective { background: var(--primary); color: var(--secondary); position: relative; overflow: hidden; }
+        .career-objective::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%); }
+        .objective-card { max-width: 800px; margin: 0 auto; padding: 3rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(10px); position: relative; overflow: hidden; opacity: 0; transform: translateY(30px); }
+        .objective-card.visible { animation: fadeInUp 0.8s ease forwards; }
+        .objective-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--secondary), transparent); animation: gradientBorder 3s ease-in-out infinite; }
+        @keyframes gradientBorder { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .objective-card p { font-size: 1.2rem; line-height: 1.8; text-align: center; font-weight: 300; position: relative; z-index: 1; }
+        .objective-card .quote-icon { font-size: 4rem; position: absolute; top: 1rem; left: 2rem; opacity: 0.1; font-family: 'Playfair Display', serif; }
+
+        .skills-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .skill-card { padding: 2rem; background: var(--secondary); border: 1px solid var(--gray-200); border-radius: 16px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; opacity: 0; transform: translateY(30px); }
+        .skill-card.visible { animation: fadeInUp 0.6s ease forwards; }
+        .skill-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+        .skill-card:hover::before { transform: scaleX(1); }
+        .skill-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); border-color: var(--primary); }
+        .skill-icon { width: 50px; height: 50px; border-radius: 12px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.3rem; color: var(--primary); transition: all 0.3s ease; }
+        .skill-card:hover .skill-icon { background: var(--primary); color: var(--secondary); transform: rotate(10deg) scale(1.1); }
+        .skill-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .skill-card p { font-size: 0.9rem; color: var(--gray-500); line-height: 1.6; }
+
+        .core-values { background: var(--gray-100); }
+        .values-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .value-card { padding: 2.5rem 2rem; background: var(--secondary); border-radius: 16px; border: 1px solid var(--gray-200); text-align: center; transition: all 0.4s ease; position: relative; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(30px); }
+        .value-card.visible { animation: fadeInUp 0.6s ease forwards; }
+        .value-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 0; background: var(--primary); transition: height 0.4s ease; z-index: 0; }
+        .value-card:hover::after { height: 100%; }
+        .value-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .value-card > * { position: relative; z-index: 1; transition: color 0.4s ease; }
+        .value-card:hover > * { color: var(--secondary); }
+        .value-card:hover .value-icon { background: rgba(255,255,255,0.1); color: var(--secondary); }
+        .value-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; color: var(--primary); transition: all 0.4s ease; }
+        .value-card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.8rem; }
+        .value-card p { font-size: 0.9rem; color: var(--gray-500); line-height: 1.6; transition: color 0.4s ease; }
+        .value-card:hover p { color: rgba(255,255,255,0.8); }
+
+        .timeline { max-width: 800px; margin: 0 auto; position: relative; }
+        .timeline::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 2px; height: 100%; background: linear-gradient(to bottom, var(--gray-300), var(--primary), var(--gray-300)); }
+        .timeline-item { display: flex; justify-content: flex-end; padding-right: 50%; position: relative; margin-bottom: 3rem; opacity: 0; transform: translateX(-30px); }
+        .timeline-item.visible { animation: fadeInLeft 0.6s ease forwards; }
+        .timeline-item:nth-child(even) { justify-content: flex-start; padding-right: 0; padding-left: 50%; transform: translateX(30px); }
+        .timeline-item:nth-child(even).visible { animation: fadeInRight 0.6s ease forwards; }
+        .timeline-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 16px; height: 16px; border-radius: 50%; background: var(--primary); border: 3px solid var(--secondary); box-shadow: 0 0 0 3px var(--primary); z-index: 2; transition: all 0.3s ease; }
+        .timeline-item:hover .timeline-dot { transform: translateX(-50%) scale(1.3); box-shadow: 0 0 0 5px var(--primary), 0 0 20px rgba(0,0,0,0.2); }
+        .timeline-content { background: var(--secondary); padding: 1.5rem 2rem; border-radius: 12px; border: 1px solid var(--gray-200); max-width: 350px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: all 0.3s ease; position: relative; }
+        .timeline-content::before { content: ''; position: absolute; top: 20px; width: 12px; height: 12px; background: var(--secondary); border-top: 1px solid var(--gray-200); border-right: 1px solid var(--gray-200); transform: rotate(45deg); }
+        .timeline-item:nth-child(odd) .timeline-content::before { right: -7px; }
+        .timeline-item:nth-child(even) .timeline-content::before { left: -7px; transform: rotate(-135deg); }
+        .timeline-content:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); border-color: var(--primary); }
+        .timeline-content h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .timeline-content p { font-size: 0.9rem; color: var(--gray-500); }
+        .timeline-badge { display: inline-block; padding: 0.3rem 0.8rem; background: var(--gray-100); border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.8rem; letter-spacing: 1px; }
+
+        .portfolio-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem; }
+        .project-card { background: var(--secondary); border-radius: 20px; overflow: hidden; border: 1px solid var(--gray-200); transition: all 0.4s ease; opacity: 0; transform: translateY(30px); }
+        .project-card.visible { animation: fadeInUp 0.6s ease forwards; }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 25px 60px rgba(0,0,0,0.12); }
+        .project-image { height: 250px; background: var(--gray-100); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .project-image img { width: 100%; height: 100%; object-fit: cover; }
+        .project-image::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.02) 100%); }
+        .project-image i { font-size: 4rem; color: var(--gray-300); transition: all 0.4s ease; }
+        .project-card:hover .project-image i { transform: scale(1.1) rotate(5deg); color: var(--gray-400); }
+        .project-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; }
+        .project-card:hover .project-overlay { opacity: 1; }
+        .project-view-btn { padding: 0.8rem 1.8rem; background: var(--secondary); color: var(--primary); border: none; border-radius: 50px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transform: translateY(20px); transition: all 0.4s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .project-card:hover .project-view-btn { transform: translateY(0); }
+        .project-view-btn:hover { background: var(--primary); color: var(--secondary); }
+        .project-info { padding: 2rem; }
+        .project-info h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .project-info .project-meta { font-size: 0.85rem; color: var(--gray-400); margin-bottom: 1rem; display: flex; gap: 1rem; }
+        .project-info p { font-size: 0.95rem; color: var(--gray-600); line-height: 1.6; margin-bottom: 1.5rem; }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .project-tag { padding: 0.3rem 0.8rem; background: var(--gray-100); border-radius: 20px; font-size: 0.75rem; font-weight: 500; color: var(--gray-600); border: 1px solid var(--gray-200); transition: all 0.3s ease; }
+        .project-tag:hover { background: var(--primary); color: var(--secondary); border-color: var(--primary); }
+
+        .achievements { background: var(--gray-100); }
+        .achievements-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .achievement-column { background: var(--secondary); padding: 2.5rem; border-radius: 20px; border: 1px solid var(--gray-200); opacity: 0; transform: translateY(30px); }
+        .achievement-column.visible { animation: fadeInUp 0.6s ease forwards; }
+        .achievement-column:nth-child(2).visible { animation-delay: 0.2s; }
+        .achievement-column h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+        .achievement-column h3 i { font-size: 1.2rem; color: var(--primary); }
+        .achievement-list { list-style: none; }
+        .achievement-list li { padding: 1rem 0; border-bottom: 1px solid var(--gray-200); display: flex; align-items: flex-start; gap: 0.8rem; transition: all 0.3s ease; }
+        .achievement-list li:last-child { border-bottom: none; }
+        .achievement-list li:hover { padding-left: 10px; color: var(--primary); }
+        .achievement-list li i { color: var(--primary); margin-top: 0.3rem; font-size: 0.8rem; }
+        .achievement-list li span { font-size: 0.95rem; color: var(--gray-600); line-height: 1.5; }
+        .achievement-list li:hover span { color: var(--primary); }
+        .tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-top: 1rem; }
+        .tool-item { padding: 0.8rem; background: var(--gray-100); border-radius: 8px; text-align: center; font-size: 0.8rem; font-weight: 500; color: var(--gray-600); border: 1px solid var(--gray-200); transition: all 0.3s ease; }
+        .tool-item:hover { background: var(--primary); color: var(--secondary); transform: translateY(-3px); }
+
+        .contact { background: var(--primary); color: var(--secondary); position: relative; overflow: hidden; }
+        .contact::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.02) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.02) 0%, transparent 50%); }
+        .contact-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; position: relative; z-index: 1; }
+        .contact-info { opacity: 0; transform: translateX(-30px); }
+        .contact-info.visible { animation: fadeInLeft 0.8s ease forwards; }
+        .contact-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1rem; }
+        .contact-info > p { color: rgba(255,255,255,0.7); margin-bottom: 2.5rem; line-height: 1.8; }
+        .contact-details { margin-bottom: 2.5rem; }
+        .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; }
+        .contact-item:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); }
+        .contact-item i { width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.3s ease; }
+        .contact-item:hover i { background: var(--secondary); color: var(--primary); }
+        .contact-item div h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+        .contact-item div p { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+        .contact-item div a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s ease; }
+        .contact-item div a:hover { color: var(--secondary); }
+        .social-links { display: flex; gap: 1rem; }
+        .social-links a { width: 45px; height: 45px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--secondary); text-decoration: none; transition: all 0.3s ease; font-size: 1.1rem; }
+        .social-links a:hover { background: var(--secondary); color: var(--primary); transform: translateY(-5px); border-color: var(--secondary); }
+        .contact-form { background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); opacity: 0; transform: translateX(30px); }
+        .contact-form.visible { animation: fadeInRight 0.8s ease forwards; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8); letter-spacing: 0.5px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 1rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: var(--secondary); font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: all 0.3s ease; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.12); box-shadow: 0 0 20px rgba(255,255,255,0.05); }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .submit-btn { width: 100%; padding: 1rem; background: var(--secondary); color: var(--primary); border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.4s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); background: var(--gray-100); }
+
+        footer { background: var(--accent); color: var(--secondary); padding: 2rem 5%; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+        footer p { font-size: 0.85rem; color: rgba(255,255,255,0.5); letter-spacing: 0.5px; }
+        footer .footer-name { color: var(--secondary); font-weight: 600; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+            .hero-description { margin-left: auto; margin-right: auto; }
+            .hero-cta { justify-content: center; }
+            .hero-profile { order: -1; }
+            .profile-container { width: 280px; height: 360px; }
+            .about-grid, .contact-grid, .achievements-grid { grid-template-columns: 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--secondary); flex-direction: column; padding: 1.5rem; gap: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+            .nav-links.active { display: flex; }
+            .mobile-menu-btn { display: block; }
+            .strengths-grid { grid-template-columns: 1fr; }
+            .timeline::before { left: 20px; }
+            .timeline-item, .timeline-item:nth-child(even) { justify-content: flex-start; padding-left: 50px; padding-right: 0; }
+            .timeline-dot { left: 20px; }
+            .timeline-content::before { left: -7px !important; transform: rotate(-135deg) !important; }
+            .tools-grid { grid-template-columns: repeat(2, 1fr); }
+            section { padding: 4rem 5%; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2rem; }
+            .profile-container { width: 240px; height: 300px; }
+            .btn { padding: 0.8rem 1.5rem; font-size: 0.8rem; }
+            .project-card { min-width: unset; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="#" class="logo">D'Glace Acsel</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-bg-pattern"></div>
+        <div class="floating-elements">
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-badge">Available for Work</span>
+                <h1>D'Glace Acsel<br><span class="highlight">Ador Dionisio</span></h1>
+                <p class="hero-subtitle">Virtual Assistant | Administrative Support | Bookkeeping Support</p>
+                <p class="hero-description">An organized and dependable professional with nearly three years of supervisory experience in a corporate retail environment. Specializing in administrative support, documentation management, inventory tracking, and business operations to help business owners save time and streamline their daily operations.</p>
+                <div class="hero-cta">
+                    <a href="#portfolio" class="btn btn-primary"><i class="fas fa-briefcase"></i> View My Portfolio</a>
+                    <a href="#contact" class="btn btn-secondary"><i class="fas fa-handshake"></i> Let's Work Together</a>
+                </div>
+            </div>
+            <div class="hero-profile">
+                <div class="profile-container">
+                    <div class="profile-glow"></div>
+                    <div class="profile-frame"></div>
+                    <div class="profile-image">
+                        <div class="profile-avatar">
+                            <!-- REPLACE 'your-image.jpg' WITH YOUR IMAGE FILE NAME -->
+                            <img src="your-image.jpg" alt="D'Glace Acsel Profile" onerror="this.style.display='none'">
+                            <i class="fas fa-user" id="fallbackIcon"></i>
+                        </div>
+                        <h3>D'Glace Acsel</h3>
+                        <p>Virtual Assistant</p>
+                        <div class="profile-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="section-header">
+            <span class="section-label">About Me</span>
+            <h2 class="section-title">Professional Background</h2>
+            <p class="section-subtitle">Transitioning from corporate retail supervision to dedicated virtual assistance</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-image">
+                <div class="about-image-box">
+                    <!-- REPLACE 'about-image.jpg' WITH YOUR ABOUT SECTION IMAGE FILE NAME -->
+                    <img src="about-image.jpg" alt="Professional Background" style="display:none;" id="aboutImg">
+                    <i class="fas fa-briefcase about-icon" id="aboutIcon"></i>
+                </div>
+            </div>
+            <div class="about-content">
+                <p class="about-text">I am an organized and dependable professional with nearly three years of supervisory experience in a corporate retail environment. My background includes administrative support, inventory management, documentation, invoice processing, record keeping, and team coordination. As I transition into the Virtual Assistant industry, I bring strong attention to detail, excellent organizational skills, and a commitment to providing reliable remote support while continuously learning new tools and technologies.</p>
+                <div class="strengths-grid">
+                    <div class="strength-card"><i class="fas fa-folder-open"></i><h4>Organization</h4><p>Systematic approach to tasks</p></div>
+                    <div class="strength-card"><i class="fas fa-check-double"></i><h4>Accuracy</h4><p>Precision in every detail</p></div>
+                    <div class="strength-card"><i class="fas fa-shield-alt"></i><h4>Reliability</h4><p>Consistent, dependable support</p></div>
+                    <div class="strength-card"><i class="fas fa-sync-alt"></i><h4>Adaptability</h4><p>Quick to embrace change</p></div>
+                    <div class="strength-card"><i class="fas fa-graduation-cap"></i><h4>Continuous Learning</h4><p>Always growing and improving</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="career-objective" id="objective">
+        <div class="section-header">
+            <span class="section-label" style="color: rgba(255,255,255,0.5);">Career Objective</span>
+            <h2 class="section-title" style="color: var(--secondary);">My Mission</h2>
+        </div>
+        <div class="objective-card">
+            <span class="quote-icon">"</span>
+            <p>To help business owners save time and streamline their daily operations by providing dependable administrative support, accurate documentation, organized record management, and excellent communication. I am committed to delivering high-quality work, maintaining confidentiality, and building long-term professional relationships with clients.</p>
+        </div>
+    </section>
+
+    <section class="skills" id="skills">
+        <div class="section-header">
+            <span class="section-label">Expertise</span>
+            <h2 class="section-title">Professional Skills</h2>
+            <p class="section-subtitle">Comprehensive skill set tailored for modern virtual assistance</p>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card"><div class="skill-icon"><i class="fas fa-tasks"></i></div><h3>Administrative Support</h3><p>Document handling, record keeping, and daily operations support with meticulous attention to detail.</p></div>
+            <div class="skill-card"><div class="skill-icon"><i class="fas fa-keyboard"></i></div><h3>Data Entry & Documentation</h3><p>Accurate updating of records, databases, and invoices with zero-error tolerance.</p></div>
+            <div class="skill-card"><div class="skill-icon"><i class="fab fa-microsoft"></i></div><h3>Microsoft Office</h3><p>Creating and managing documents, spreadsheets, and presentations with professional formatting.</p></div>
+            <div class="skill-card"><div class="skill-icon"><i class="fab fa-google"></i></div><h3>Google Workspace</h3><p>Proficient in Docs, Sheets, Slides, Drive, and collaborative cloud-based workflows.</p></div>
+            <div class="skill-card"><div class="skill-icon"><i class="fas fa-envelope"></i></div><h3>Email Management</h3><p>Organizing communication, prioritizing messages, and maintaining inbox zero.</p></div>
+            <div class="skill-card"><div class="skill-icon"><i class="fas fa-calendar-alt"></i></div><h3>Calendar Management</h3><p>Scheduling tasks, coordinating appointments, and managing time efficiently.</p></div>
+            <div class="skill-card"><div class="skill-icon"><i class="fas fa-clock"></i></div><h3>Organization & Time Management</h3><p>Prioritizing tasks and meeting deadlines efficiently with structured workflows.</p></div>
+            <div class="skill-card"><div class="skill-icon"><i class="fas fa-search"></i></div><h3>Attention to Detail</h3><p>Ensuring accuracy in all administrative work through careful verification.</p></div>
+            <div class="skill-card"><div class="skill-icon"><i class="fas fa-users"></i></div><h3>Communication & Team Coordination</h3><p>Working effectively with suppliers, team members, and management.</p></div>
+        </div>
+    </section>
+
+    <section class="core-values" id="values">
+        <div class="section-header">
+            <span class="section-label">Principles</span>
+            <h2 class="section-title">Core Values</h2>
+            <p class="section-subtitle">The foundation of my professional practice</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card"><div class="value-icon"><i class="fas fa-handshake"></i></div><h3>Integrity</h3><p>Building trust through honesty and confidentiality in every interaction.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-user-check"></i></div><h3>Ownership</h3><p>Taking initiative and responsibility without being asked.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-award"></i></div><h3>Excellence</h3><p>Delivering accurate, high-quality work every single time.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-clock"></i></div><h3>Reliability</h3><p>Being dependable, responsive, and deadline-driven.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-seedling"></i></div><h3>Growth Mindset</h3><p>Continuously learning and improving to serve you better.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-chart-line"></i></div><h3>Client Success</h3><p>Measuring my success by the success of the clients I support.</p></div>
+        </div>
+    </section>
+
+    <section class="experience" id="experience">
+        <div class="section-header">
+            <span class="section-label">Experience</span>
+            <h2 class="section-title">Professional Journey</h2>
+            <p class="section-subtitle">Supervisory experience transitioning into virtual assistance</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-badge">Supervisor</span><h4>Daily Operations Management</h4><p>Managed daily operations and ensured efficient workflow across all departments.</p></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-badge">Verification</span><h4>Supplier Deliveries & Invoices</h4><p>Verified supplier deliveries, invoices, and supporting documents for accuracy.</p></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-badge">Inventory</span><h4>Inventory Records Management</h4><p>Maintained inventory records and monitored stock movement systematically.</p></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-badge">Reporting</span><h4>Reports & Documentation</h4><p>Prepared reports and organized business documents for management review.</p></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-badge">Coordination</span><h4>Supplier & Team Coordination</h4><p>Coordinated with suppliers, team members, and management effectively.</p></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-badge">Leadership</span><h4>Team Performance Support</h4><p>Assigned tasks and supported team performance to achieve goals.</p></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-badge">Quality</span><h4>Accuracy & Record Management</h4><p>Ensured accuracy, organization, and proper record management at all times.</p></div></div>
+        </div>
+    </section>
+
+    <section class="portfolio" id="portfolio">
+        <div class="section-header">
+            <span class="section-label">Portfolio</span>
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">Showcasing administrative expertise and project outcomes</p>
+        </div>
+        <div class="portfolio-grid">
+            <div class="project-card">
+                <div class="project-image"><i class="fas fa-file-alt"></i><div class="project-overlay"><a href="#" class="project-view-btn"><i class="fas fa-external-link-alt"></i> View Sample Project</a></div></div>
+                <div class="project-info">
+                    <h3>Administrative Documentation Management</h3>
+                    <div class="project-meta"><span><i class="fas fa-folder"></i> Project 1</span><span><i class="fas fa-calendar"></i> 2024</span></div>
+                    <p>Comprehensive management of business documents, reports, invoices, and operational records with verified data accuracy and systematic file organization.</p>
+                    <div class="project-tags"><span class="project-tag">Documentation</span><span class="project-tag">Reports</span><span class="project-tag">Invoices</span><span class="project-tag">Data Accuracy</span><span class="project-tag">File Organization</span></div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image"><i class="fas fa-database"></i><div class="project-overlay"><a href="#" class="project-view-btn"><i class="fas fa-external-link-alt"></i> View Sample Project</a></div></div>
+                <div class="project-info">
+                    <h3>Data Management & Administrative Support</h3>
+                    <div class="project-meta"><span><i class="fas fa-folder"></i> Project 2</span><span><i class="fas fa-calendar"></i> 2024</span></div>
+                    <p>Performed data entry, organized documents and archives, assisted in report preparation, and ensured systematic data storage for improved workflow efficiency.</p>
+                    <div class="project-tags"><span class="project-tag">Data Entry</span><span class="project-tag">Organization</span><span class="project-tag">Reports</span><span class="project-tag">Workflow</span><span class="project-tag">Error Reduction</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="achievements" id="achievements">
+        <div class="section-header">
+            <span class="section-label">Growth</span>
+            <h2 class="section-title">Achievements & Self Development</h2>
+            <p class="section-subtitle">Continuous improvement and professional milestones</p>
+        </div>
+        <div class="achievements-grid">
+            <div class="achievement-column">
+                <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                <ul class="achievement-list">
+                    <li><i class="fas fa-check"></i><span>Successfully managed daily operational responsibilities as a Supervisor while maintaining accuracy and efficiency.</span></li>
+                    <li><i class="fas fa-check"></i><span>Improved organization and record management processes through proper documentation and tracking.</span></li>
+                    <li><i class="fas fa-check"></i><span>Developed strong leadership, communication, and problem-solving skills through team coordination.</span></li>
+                    <li><i class="fas fa-check"></i><span>Built experience in inventory management, supplier coordination, and business operations.</span></li>
+                </ul>
+            </div>
+            <div class="achievement-column">
+                <h3><i class="fas fa-rocket"></i> Self Development</h3>
+                <ul class="achievement-list">
+                    <li><i class="fas fa-check"></i><span>Continuously expanding skills in Virtual Assistance, administrative support, and remote work practices.</span></li>
+                    <li><i class="fas fa-check"></i><span>Improving skills in communication, organization, time management, and digital collaboration.</span></li>
+                    <li><i class="fas fa-check"></i><span>Creating a strong foundation to provide reliable and efficient support to future clients.</span></li>
+                </ul>
+                <div class="tools-grid">
+                    <div class="tool-item">Google Workspace</div>
+                    <div class="tool-item">Microsoft Office</div>
+                    <div class="tool-item">Canva</div>
+                    <div class="tool-item">Slack</div>
+                    <div class="tool-item">Trello</div>
+                    <div class="tool-item">Asana</div>
+                    <div class="tool-item">Notion</div>
+                    <div class="tool-item">Remote Work</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>Ready to streamline your business operations? Let's discuss how I can support your administrative needs and help you focus on what matters most.</p>
+                <div class="contact-details">
+                    <div class="contact-item"><i class="fas fa-user"></i><div><h4>Full Name</h4><p>D'Glace Acsel Ador Dionisio</p></div></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><div><h4>Email</h4><a href="mailto:adordionisiodglaceacsel@gmail.com">adordionisiodglaceacsel@gmail.com</a></div></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><div><h4>Phone</h4><a href="tel:+639536349416">+63 953 634 9416</a></div></div>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="name" placeholder="Enter your name" required></div>
+                    <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="Enter your email" required></div>
+                    <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" name="subject" placeholder="How can I help?" required></div>
+                    <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea></div>
+                    <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Start a Collaboration</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 <span class="footer-name">D'Glace Acsel Ador Dionisio</span>. All rights reserved. | Virtual Assistant Portfolio</p>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); });
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-header, .about-image, .about-content, .strength-card, .objective-card, .skill-card, .value-card, .timeline-item, .project-card, .achievement-column, .contact-info, .contact-form').forEach(el => observer.observe(el));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.submit-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                btn.style.background = '#4ade80';
+                btn.style.color = '#000';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                    btn.disabled = false;
+                    e.target.reset();
+                }, 2000);
+            }, 1500);
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            const dots = document.querySelectorAll('.floating-dot');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            dots.forEach((dot, index) => {
+                const speed = (index + 1) * 10;
+                dot.style.transform = `translate(${(x - 0.5) * speed}px, ${(y - 0.5) * speed}px)`;
+            });
+        });
+
+        const subtitle = document.querySelector('.hero-subtitle');
+        const text = subtitle.textContent;
+        subtitle.textContent = '';
+        let i = 0;
+        function typeWriter() { if (i < text.length) { subtitle.textContent += text.charAt(i); i++; setTimeout(typeWriter, 50); } }
+        setTimeout(typeWriter, 1000);
+    </script>
+</body>
+</html>
